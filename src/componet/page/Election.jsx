@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -19,10 +19,24 @@ const Election = () => {
     setOpen(false);
   };
 
+
+
   const electionCreate = () => {
+    const electionName = electionNameRef.current.value;
+    const electionDate = electionDateRef.current.value; // Get the value from the ref
+    const date = new Date(electionDate); // Convert to Date object
+
+    // Extract day, month, and year
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Months are zero indexed, so add 1
+    const year = date.getFullYear();
+
+    // Format the date as "DD/MM/YYYY"
+    const formattedDate = `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
+
     const election = {
-      election_name: electionNameRef.current.value,
-      date: electionDateRef.current.value
+      election_name: electionName,
+      date: formattedDate // Assign the formatted date
     };
     console.log(election, "election data");
   };
