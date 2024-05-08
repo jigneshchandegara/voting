@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import bjp from '../../image/election-commission-of-india.jpg'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,7 +14,9 @@ const Party = () => {
   const partyname = useRef();
   const shortcode = useRef();
   const [file, setFile] = useState();
+
   const dispatch = useDispatch();
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,6 +32,7 @@ const Party = () => {
 
   const partycreate = (e) => {
     e.preventDefault();
+    setOpen(false);
     const party_name = partyname.current.value;
     const short_code = shortcode.current.value;
     const formdata = new FormData();
@@ -42,16 +46,19 @@ const Party = () => {
     dispatch({ type: POST_Party_PENDING, payload: formdata });
   }
 
-  let party = useSelector((state) => state.userReducer);
+  let party = useSelector((state) => state.userReducer.party);
+  console.log(party, "party data");
 
   const handledelete = (id) => {
-    console.log(id , "delete id");
+    console.log(id, "delete id");
     dispatch({ type: DELETE_Party_PENDING, payload: id })
   }
 
   useEffect(() => {
     dispatch({ type: GET_Party_PENDING });
   }, []);
+  
+
 
   return (
     <>
@@ -112,20 +119,18 @@ const Party = () => {
                 </tr>
               </thead>
               <tbody>
-                {party.party.data?.map((value, index) => (
+                {party?.map((value, index) => (
                   <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th scope="col" className="px-6 py-3">
                       {index + 1}
                     </th>
                     <td className="px-6 py-4 text-gray-600">
-                      <img src={value.party_logo} alt="Party Logo" className="w-16 h-16" />
+                      <img src={bjp} alt="Party Logo" className="w-16 h-16" />
                     </td>
                     <td className="px-6 py-4 text-gray-600">{value.party_name}</td>
                     <td className="px-6 py-4 text-gray-600">{value.short_code}</td>
                     <td className="px-6 py-4 text-gray-600">
-                      <button>
-                        <i className="fa-solid fa-trash font-medium text-blue-600 dark:text-blue-500 hover:text-red-600" onClick={() => handledelete(value._id)}></i>
-                      </button>
+                      <i className="fa-solid fa-trash font-medium text-blue-600 dark:text-blue-500 hover:text-red-600" onClick={() => handledelete(value._id)}></i>
                     </td>
                   </tr>
                 ))}

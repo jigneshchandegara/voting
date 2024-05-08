@@ -1,8 +1,11 @@
 import { combineReducers } from "redux";
-import userReducer from "./use/reducer";
+import { userReducer, electionReducer, voterReducer, connectionReducer } from "./use/reducer";
 
 let rootReducers = combineReducers({
     userReducer,
+    electionReducer,
+    voterReducer,
+    connectionReducer,
 });
 
-export default  rootReducers;
+export default rootReducers;

@@ -1,15 +1,19 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useDispatch, useSelector } from 'react-redux';
+import { DELETE_ELECTION_PENDING, GET_ELECTION_PENDING, POST_ELECTION_PENDING } from '../../use/action';
 
 const Election = () => {
   const [open, setOpen] = React.useState(false);
   const electionNameRef = useRef();
   const electionDateRef = useRef();
+
+  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,27 +23,42 @@ const Election = () => {
     setOpen(false);
   };
 
-
-
+  //post data
   const electionCreate = () => {
+    setOpen(false);
     const electionName = electionNameRef.current.value;
-    const electionDate = electionDateRef.current.value; // Get the value from the ref
-    const date = new Date(electionDate); // Convert to Date object
+    const electionDate = electionDateRef.current.value; 
+    const date = new Date(electionDate); 
 
-    // Extract day, month, and year
     const day = date.getDate();
-    const month = date.getMonth() + 1; // Months are zero indexed, so add 1
+    const month = date.getMonth() + 1; 
     const year = date.getFullYear();
 
-    // Format the date as "DD/MM/YYYY"
     const formattedDate = `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
 
     const election = {
       election_name: electionName,
-      date: formattedDate // Assign the formatted date
+      date: formattedDate 
     };
     console.log(election, "election data");
+
+    dispatch({ type: POST_ELECTION_PENDING, payload: election })
   };
+
+  let election = useSelector((state) => state.electionReducer.election)
+  console.log(election, "election final data");
+
+
+  //delete data
+  const handledelete = (id) => {
+    console.log(id, "delete id");
+    dispatch({ type: DELETE_ELECTION_PENDING, payload: id })
+  }
+
+  // get data
+  useEffect(() => {
+    dispatch({ type: GET_ELECTION_PENDING })
+  }, [])
 
   return (
     <div className="p-4 mt-16 sm:ml-64">
@@ -88,31 +107,32 @@ const Election = () => {
                 <th scope="col" className="px-6 py-3">
                   Date
                 </th>
+                <th scope="col" className="px-6 py-3">
+                  Delete
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="col" className="px-6 py-3 ">
-                  1
-                </th>
-                <td className="px-6 py-4 text-gray-600 ">
-                  PM Election
-                </td>
-                <td className="px-6 py-4 text-gray-600 ">
-                  07/05/2024
-                </td>
-              </tr>
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="col" className="px-6 py-3 ">
-                  2
-                </th>
-                <td className="px-6 py-4 text-gray-600 ">
-                  CM Election
-                </td>
-                <td className="px-6 py-4 text-gray-600 ">
-                  10/12/2027
-                </td>
-              </tr>
+              {
+                election?.map((value, index) => {
+                  return (
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                      <th scope="col" className="px-6 py-3 ">
+                        {index + 1}
+                      </th>
+                      <td className="px-6 py-4 text-gray-600 ">
+                        {value.election_name}
+                      </td>
+                      <td className="px-6 py-4 text-gray-600 ">
+                        {value.date}
+                      </td>
+                      <td className="px-6 py-4 text-gray-600">
+                        <i className="fa-solid fa-trash font-medium text-blue-600 dark:text-blue-500 hover:text-red-600" onClick={() => handledelete(value._id)}></i>
+                      </td>
+                    </tr>
+                  )
+                })
+              }
             </tbody>
           </table>
         </div>
