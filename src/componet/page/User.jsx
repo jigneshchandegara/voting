@@ -7,6 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { DELETE_VOTE_PENDING, GET_VOTE_PENDING, POST_VOTE_PENDING } from '../../use/action';
+import { base_url, get_voter_list } from '../../AllURL';
 
 const User = () => {
 
@@ -79,7 +80,8 @@ const User = () => {
 
   //get useEffect
   useEffect(() => {
-    dispatch({ type: GET_VOTE_PENDING })
+    let url = base_url + get_voter_list;
+    dispatch({ type: GET_VOTE_PENDING ,url })
   }, [])
 
 

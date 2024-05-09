@@ -1,6 +1,6 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { delete_election, delete_party, get_election, get_party, get_voter, post_connection, post_election, post_party, post_voter } from "../use/api";
-import { DELETE_ELECTION_ERROR, DELETE_ELECTION_SUCCESS, DELETE_Party_ERROR, DELETE_Party_PENDING, DELETE_Party_SUCCESS, DELETE_VOTE_ERROR, DELETE_VOTE_SUCCESS, GET_ELECTION_ERROR, GET_ELECTION_PENDING, GET_ELECTION_SUCCESS, GET_Party_ERROR, GET_Party_PENDING, GET_Party_SUCCESS, GET_VOTE_ERROR, GET_VOTE_PENDING, GET_VOTE_SUCCESS, POST_ELECTION_ERROR, POST_ELECTION_PENDING, POST_ELECTION_SUCCESS, POST_Party_ERROR, POST_Party_PENDING, POST_Party_SUCCESS, POST_VOTE_ERROR, POST_VOTE_PENDING, POST_VOTE_SUCCESS, POST_connection_ERROR, POST_connection_PENDING, POST_connection_SUCCESS } from "../use/action";
+import { delete_connection, delete_election, delete_party, delete_voter, get_connection, get_election, get_party, get_voter, post_connection, post_election, post_party, post_voter } from "../use/api";
+import { DELETE_ELECTION_ERROR, DELETE_ELECTION_PENDING, DELETE_ELECTION_SUCCESS, DELETE_Party_ERROR, DELETE_Party_PENDING, DELETE_Party_SUCCESS, DELETE_VOTE_ERROR, DELETE_VOTE_PENDING, DELETE_VOTE_SUCCESS, DELETE_connection_ERROR, DELETE_connection_PENDING, DELETE_connection_SUCCESS, GET_ELECTION_ERROR, GET_ELECTION_PENDING, GET_ELECTION_SUCCESS, GET_Party_ERROR, GET_Party_PENDING, GET_Party_SUCCESS, GET_VOTE_ERROR, GET_VOTE_PENDING, GET_VOTE_SUCCESS, GET_connection_ERROR, GET_connection_PENDING, GET_connection_SUCCESS, POST_ELECTION_ERROR, POST_ELECTION_PENDING, POST_ELECTION_SUCCESS, POST_Party_ERROR, POST_Party_PENDING, POST_Party_SUCCESS, POST_VOTE_ERROR, POST_VOTE_PENDING, POST_VOTE_SUCCESS, POST_connection_ERROR, POST_connection_PENDING, POST_connection_SUCCESS } from "../use/action";
 
 //party post
 function* handle_post_party(action) {
@@ -43,7 +43,7 @@ function* handle_delete_party(action) {
         let { data, status } = yield call(delete_party, action);
         // console.log(data, status, "data and status from handle delete party");
         if (status == 200) {
-            yield put({ type: DELETE_Party_SUCCESS, data })
+            yield put({ type: DELETE_Party_SUCCESS, data:action.payload })
         } else {
             yield put({ type: DELETE_Party_ERROR, data })
         }
@@ -89,12 +89,12 @@ function* handle_get_election(action) {
 
 //election delete
 function* handle_delete_election(action) {
-    // console.log(action, "action from handle delete election");
+    console.log(action, "action from handle delete election");
     try {
         let { data, status } = yield call(delete_election, action);
-        // console.log(data, status, "data and status from handle delete election");
+        console.log(data, status, "data and status from handle delete election");
         if (status == 200) {
-            yield put({ type: DELETE_ELECTION_SUCCESS, data })
+            yield put({ type: DELETE_ELECTION_SUCCESS, data:action.payload })
         } else {
             yield put({ type: DELETE_ELECTION_ERROR, data })
         }
@@ -106,10 +106,10 @@ function* handle_delete_election(action) {
 // voter post
 
 function* handle_post_voter(action) {
-    console.log(action, "action from handle post voter");
+    // console.log(action, "action from handle post voter");
     try {
         let { data, status } = yield call(post_voter, action);
-        console.log(data, status, "data and status from handle post voter");
+        // console.log(data, status, "data and status from handle post voter");
         if (status == 201 || status == 200) {
             yield put({ type: POST_VOTE_SUCCESS, data })
         } else {
@@ -122,10 +122,10 @@ function* handle_post_voter(action) {
 
 //voter get
 function* handle_get_voter(action) {
-    console.log(action, "action from handle get voter");
+    // console.log(action, "action from handle get voter");
     try {
         let { data, status } = yield call(get_voter, action);
-        console.log(data, status, "data and status from handle get party");
+        // console.log(data, status, "data and status from handle get party");
         if (status == 200) {
             yield put({ type: GET_VOTE_SUCCESS, data })
         } else {
@@ -139,12 +139,12 @@ function* handle_get_voter(action) {
 
 //voter delete
 function* handle_delete_voter(action) {
-    console.log(action, "action from handle delete voter");
+    // console.log(action, "action from handle delete voter");
     try {
-        let { data, status } = yield call(action);
-        console.log(data, status, "data and status from handle delete voter");
+        let { data, status } = yield call(delete_voter  ,action);
+        // console.log(data, status, "data and status from handle delete voter");
         if (status == 200) {
-            yield put({ type: DELETE_VOTE_SUCCESS, data })
+            yield put({ type: DELETE_VOTE_SUCCESS, data:action.payload })
         } else {
             yield put({ type: DELETE_VOTE_ERROR, data })
         }
@@ -170,6 +170,42 @@ function* handle_post_connection(action) {
     }
 }
 
+//get connection
+
+function* handle_get_connection(action) {
+    console.log(action, "action from handle get connection");
+    try {
+        let { data, status } = yield call(get_connection, action);
+        console.log(data, status, "data and status from handle get connection");
+        if (status == 200) {
+            yield put({ type: GET_connection_SUCCESS, data })
+        } else {
+            yield put({ type: GET_connection_ERROR, data })
+        }
+    }
+    catch (error) {
+        yield put({ type: GET_connection_ERROR, data: error })
+    }
+}
+
+//delete connection
+
+function* handle_delete_connection(action) {
+    console.log(action, "action from handle delete connection");
+    try {
+        let { data, status } = yield call(delete_connection  ,action);
+        console.log(data, status, "data and status from handle delete connection");
+        if (status == 200) {
+            yield put({ type: DELETE_connection_SUCCESS, data:action.payload })
+        } else {
+            yield put({ type: DELETE_connection_ERROR, data })
+        }
+    } catch (error) {
+        yield put({ type: DELETE_connection_ERROR, data: error })
+    }
+}
+
+
 //party
 function* handle_post_party_saga() {
     yield takeLatest(POST_Party_PENDING, handle_post_party);
@@ -194,7 +230,7 @@ function* handle_get_election_saga() {
 }
 
 function* handle_delete_election_saga() {
-    yield takeLatest(DELETE_Party_PENDING, handle_delete_election)
+    yield takeLatest(DELETE_ELECTION_PENDING, handle_delete_election)
 }
 
 //voter
@@ -206,7 +242,7 @@ function* handle_get_voter_saga() {
     yield takeLatest(GET_VOTE_PENDING, handle_get_voter)
 }
 function* handle_delete_voter_saga() {
-    yield takeLatest(GET_VOTE_PENDING, handle_delete_voter)
+    yield takeLatest(DELETE_VOTE_PENDING, handle_delete_voter)
 }
 
 //connection
@@ -214,8 +250,17 @@ function* handle_post_connection_saga() {
     yield takeLatest(POST_connection_PENDING, handle_post_connection)
 }
 
+function* handle_get_connection_saga(){
+    yield takeLatest(GET_connection_PENDING , handle_get_connection)
+}
+
+function* handle_delete_connection_saga(){
+    yield takeLatest(DELETE_connection_PENDING , handle_delete_connection)
+}
+
+
 function* rootSaga() {
-    yield all([handle_post_party_saga(), handle_get_party_saga(), handle_delete_party_saga(), handle_post_election_saga(), handle_get_election_saga(), handle_delete_election_saga(), handle_post_voter_saga(), handle_get_voter_saga(), handle_delete_voter_saga(), handle_post_connection_saga()])
+    yield all([handle_post_party_saga(), handle_get_party_saga(), handle_delete_party_saga(), handle_post_election_saga(), handle_get_election_saga(), handle_delete_election_saga(), handle_post_voter_saga(), handle_get_voter_saga(), handle_delete_voter_saga(), handle_post_connection_saga() , handle_get_connection_saga() , handle_delete_connection_saga()])
 }
 
 export default (rootSaga)

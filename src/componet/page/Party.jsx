@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import bjp from '../../image/election-commission-of-india.jpg'
+// import bjp from '../../image/election-commission-of-india.jpg'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -8,6 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { DELETE_Party_PENDING, GET_Party_PENDING, POST_Party_PENDING } from '../../use/action';
+import { base_url, get_party_list } from '../../AllURL';
 
 const Party = () => {
   const [open, setOpen] = useState(false);
@@ -46,7 +47,7 @@ const Party = () => {
     dispatch({ type: POST_Party_PENDING, payload: formdata });
   }
 
-  let party = useSelector((state) => state.userReducer.party);
+  let party = useSelector((state) => state.partyReducer.party);
   console.log(party, "party data");
 
   const handledelete = (id) => {
@@ -55,7 +56,8 @@ const Party = () => {
   }
 
   useEffect(() => {
-    dispatch({ type: GET_Party_PENDING });
+    let url = base_url + get_party_list;
+    dispatch({ type: GET_Party_PENDING ,url });
   }, []);
   
 
@@ -125,7 +127,7 @@ const Party = () => {
                       {index + 1}
                     </th>
                     <td className="px-6 py-4 text-gray-600">
-                      <img src={bjp} alt="Party Logo" className="w-16 h-16" />
+                      <img src={value.party_logo} alt="Party Logo" className="w-16 h-16" />
                     </td>
                     <td className="px-6 py-4 text-gray-600">{value.party_name}</td>
                     <td className="px-6 py-4 text-gray-600">{value.short_code}</td>

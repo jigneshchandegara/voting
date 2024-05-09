@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import { userReducer, electionReducer, voterReducer, connectionReducer } from "./use/reducer";
+import { partyReducer, electionReducer, voterReducer, connectionReducer } from "./use/reducer";
 
 let rootReducers = combineReducers({
-    userReducer,
+    partyReducer,
     electionReducer,
     voterReducer,
     connectionReducer,

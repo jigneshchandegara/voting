@@ -6,7 +6,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { POST_ELECTION_PENDING, POST_Party_PENDING, POST_connection_PENDING } from '../../use/action';
+import { DELETE_connection_PENDING, GET_ELECTION_PENDING, GET_Party_PENDING, GET_connection_PENDING, POST_ELECTION_PENDING, POST_Party_PENDING, POST_connection_PENDING } from '../../use/action';
+import { base_url, get_connection_list, get_election_list, get_party_list } from '../../AllURL';
 
 
 const Conection = () => {
@@ -24,23 +25,46 @@ const Conection = () => {
     setOpen(false);
   };
 
+  // connection election and 
+  useEffect(() => {
+    const electiondata = base_url + get_election_list;
+    const partydata = base_url + get_party_list;
+    dispatch({ type: GET_ELECTION_PENDING, payload: electiondata });
+    dispatch({ type: GET_Party_PENDING, payload: partydata });
+  }, [])
+
   let election = useSelector((state) => state.electionReducer.election)
   console.log(election, "election final data");
 
-  let party = useSelector((state) => state.userReducer.party);
+  let party = useSelector((state) => state.partyReducer.party);
   console.log(party, "party data");
 
- 
+
   //poat data
   const Conectiondata = () => {
     setOpen(false);
     let connectdata = {
-      party: electionname.current.value,
-      election: partyname.current.value,
+      election: electionname.current.value,
+      party: partyname.current.value,
     }
     console.log(connectdata, "connect data");
     dispatch({ type: POST_connection_PENDING, payload: connectdata })
   }
+
+  //get data
+  let connection = useSelector((state) => state.connectionReducer.connection);
+  console.log(connection, "connection final data");
+
+  //delete data
+  const connectiondelete = (id) => {
+    console.log(id, "id ");
+    dispatch({ type: DELETE_connection_PENDING , payload : id})
+  }
+
+  useEffect(() => {
+    let url = base_url + get_connection_list;
+    dispatch({ type: GET_connection_PENDING, url })
+  }, [])
 
   return (
     <div class="p-4 mt-16 sm:ml-64">
@@ -101,53 +125,32 @@ const Conection = () => {
                 <th scope="col" class="px-6 py-3">
                   Party Name
                 </th>
+                <th scope="col" class="px-6 py-3">
+                  Delete
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="col" class="px-6 py-3 ">
-                  1
-                </th>
-                <td class="px-6 py-4 text-gray-600 ">
-                  PM Election
-                </td>
-                <td class="px-6 py-4 text-gray-600 ">
-                  BJP
-                </td>
-              </tr>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="col" class="px-6 py-3 ">
-                  2
-                </th>
-                <td class="px-6 py-4 text-gray-600 ">
-                  PM Election
-                </td>
-                <td class="px-6 py-4 text-gray-600 ">
-                  APP
-                </td>
-              </tr>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="col" class="px-6 py-3 ">
-                  3
-                </th>
-                <td class="px-6 py-4 text-gray-600 ">
-                  PM Election
-                </td>
-                <td class="px-6 py-4 text-gray-600 ">
-                  SP
-                </td>
-              </tr>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="col" class="px-6 py-3 ">
-                  4
-                </th>
-                <td class="px-6 py-4 text-gray-600 ">
-                  CM Election
-                </td>
-                <td class="px-6 py-4 text-gray-600 ">
-                  BJP
-                </td>
-              </tr>
+              {
+                connection?.map((value, index) => {
+                  return (
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                      <th scope="col" class="px-6 py-3 ">
+                          {index + 1}
+                      </th>
+                      <td class="px-6 py-4 text-gray-600 ">
+                          {value.election?.election_name}
+                      </td>
+                      <td class="px-6 py-4 text-gray-600 ">
+                          {value.party?.party_name}
+                      </td>
+                      <td class="px-6 py-4 text-gray-600 ">
+                        <i className="fa-solid fa-trash font-medium text-blue-600 dark:text-blue-500 hover:text-red-600" onClick={() => connectiondelete(value._id)}></i>
+                      </td>
+                    </tr>
+                  )
+                })
+              }
             </tbody>
           </table>
         </div>
