@@ -1,7 +1,6 @@
 import axios from "axios";
 import {
   base_url,
-  delete_connection_list_findid,
   delete_election_list_findid,
   delete_party_list_findid,
   delete_voter_list_findid,
@@ -13,6 +12,7 @@ import {
   post_election_create,
   post_party_create,
   post_voter_create,
+  post_voting_create,
 } from "../AllURL";
 
 //party
@@ -128,19 +128,19 @@ let delete_voter = (action) => {
 
 //connection
 let post_connection = (action) => {
-  console.log(action, "this action from post connection");
+  // console.log(action, "this action from post connection");
   return axios.post(base_url + post_connection_create, action.payload).then((res) => {
-      console.log(res, "res is post connection");
-      let data = res.data.data;
-      let status = res.status;
-      return { data, status };
-    });
+    // console.log(res, "res is post connection");
+    let data = res.data.data;
+    let status = res.status;
+    return { data, status };
+  });
 };
 
 let get_connection = (action) => {
-  console.log(action, "this action from get connection");
+  // console.log(action, "this action from get connection");
   return axios.get(base_url + get_connection_list).then((res) => {
-    console.log(res, "res is get connection");
+    // console.log(res, "res is get connection");
     let data = res.data.data;
     // console.log(data, "api connection");
     let status = res.status;
@@ -148,15 +148,18 @@ let get_connection = (action) => {
   });
 };
 
-let delete_connection = (action) => {
-  console.log(action, "this action from delete connection");
-  return axios.delete(base_url + delete_connection_list_findid + action.payload).then((res) => {
-    console.log(res, "res is delete connection");
-    let data = res.data;
+
+//voting
+let post_voting = (action) => {
+  console.log(action, "this action from post voting");
+  return axios.post(base_url + post_voting_create, action.payload).then((res) => {
+    console.log(res, "res is post voting");
+    let data = res.data.data;
     let status = res.status;
-    return { data, status }
-  })
-}
+    return {data, status}; 
+  });
+};
+
 
 export {
   post_party,
@@ -170,5 +173,5 @@ export {
   delete_voter,
   post_connection,
   get_connection,
-  delete_connection,
+  post_voting
 };

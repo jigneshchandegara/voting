@@ -6,8 +6,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { DELETE_connection_PENDING, GET_ELECTION_PENDING, GET_Party_PENDING, GET_connection_PENDING, POST_ELECTION_PENDING, POST_Party_PENDING, POST_connection_PENDING } from '../../use/action';
-import { base_url, get_connection_list, get_election_list, get_party_list } from '../../AllURL';
+import { DELETE_connection_PENDING, GET_ELECTION_PENDING, GET_Party_PENDING, GET_connection_PENDING,  POST_connection_PENDING } from '../../../use/action';
+import { base_url, get_connection_list, get_election_list, get_party_list } from '../../../AllURL';
 
 
 const Conection = () => {
@@ -24,14 +24,6 @@ const Conection = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  // connection election and 
-  useEffect(() => {
-    const electiondata = base_url + get_election_list;
-    const partydata = base_url + get_party_list;
-    dispatch({ type: GET_ELECTION_PENDING, payload: electiondata });
-    dispatch({ type: GET_Party_PENDING, payload: partydata });
-  }, [])
 
   let election = useSelector((state) => state.electionReducer.election)
   console.log(election, "election final data");
@@ -55,17 +47,7 @@ const Conection = () => {
   let connection = useSelector((state) => state.connectionReducer.connection);
   console.log(connection, "connection final data");
 
-  //delete data
-  const connectiondelete = (id) => {
-    console.log(id, "id ");
-    dispatch({ type: DELETE_connection_PENDING , payload : id})
-  }
-
-  useEffect(() => {
-    let url = base_url + get_connection_list;
-    dispatch({ type: GET_connection_PENDING, url })
-  }, [])
-
+  
   return (
     <div class="p-4 mt-16 sm:ml-64">
       <section>
@@ -125,9 +107,6 @@ const Conection = () => {
                 <th scope="col" class="px-6 py-3">
                   Party Name
                 </th>
-                <th scope="col" class="px-6 py-3">
-                  Delete
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -143,9 +122,6 @@ const Conection = () => {
                       </td>
                       <td class="px-6 py-4 text-gray-600 ">
                           {value.party?.party_name}
-                      </td>
-                      <td class="px-6 py-4 text-gray-600 ">
-                        <i className="fa-solid fa-trash font-medium text-blue-600 dark:text-blue-500 hover:text-red-600" onClick={() => connectiondelete(value._id)}></i>
                       </td>
                     </tr>
                   )

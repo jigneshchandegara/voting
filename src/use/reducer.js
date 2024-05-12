@@ -32,6 +32,9 @@ import {
   POST_VOTE_ERROR,
   POST_VOTE_PENDING,
   POST_VOTE_SUCCESS,
+  POST_VOTING_ERROR,
+  POST_VOTING_PENDING,
+  POST_VOTING_SUCCESS,
   POST_connection_ERROR,
   POST_connection_PENDING,
   POST_connection_SUCCESS,
@@ -42,6 +45,7 @@ let initialstate = {
   election: [],
   voter: [],
   connection: [],
+  voting: [],
   isLoading: false,
   isError: null,
 };
@@ -260,7 +264,7 @@ let voterReducer = (state = initialstate, action) => {
 };
 
 let connectionReducer = (state = initialstate, action) => {
-  console.log(action, "action from connectionReducer");
+  // console.log(action, "action from connectionReducer");
   switch (action.type) {
     //post
     case POST_connection_PENDING: {
@@ -270,7 +274,6 @@ let connectionReducer = (state = initialstate, action) => {
       };
     }
     case POST_connection_SUCCESS: {
-      console.log(action.data, "post success");
       return {
         ...state,
         isLoading: false,
@@ -291,7 +294,6 @@ let connectionReducer = (state = initialstate, action) => {
       };
     }
     case GET_connection_SUCCESS: {
-      console.log(action.data, "get success");
       return {
         ...state,
         isLoading: false,
@@ -304,25 +306,6 @@ let connectionReducer = (state = initialstate, action) => {
         ...state,
       };
     }
-    case DELETE_connection_PENDING: {
-      return {
-        isLoading: true,
-        ...state,
-      };
-    }
-    case DELETE_connection_SUCCESS: {
-      return {
-        ...state,
-        isLoading: false,
-        connection:state.connection.filter((item) => item._id != action.data )
-      };
-    }
-    case DELETE_connection_ERROR: {
-      return {
-        isLoading: false,
-        isError: action.data,
-      };
-    }
     default: {
       return {
         ...state,
@@ -331,4 +314,34 @@ let connectionReducer = (state = initialstate, action) => {
   }
 };
 
-export { partyReducer, electionReducer, voterReducer, connectionReducer };
+let votingReducer = (state = initialstate, action) => {
+    console.log(action , "action from voting");
+    switch(action.type){
+      case POST_VOTING_PENDING:{
+        return{
+          ...state,
+          isLoading :true,
+        }
+      }
+      case POST_VOTING_SUCCESS:{
+        return{
+          ...state,
+          isLoading :false,
+          voting:state.voting.concat(action.data),
+        }
+      }
+      case POST_VOTING_ERROR :{
+        return {
+          isError: action.data,
+          ...state,
+        };
+      }
+      default :{
+        return{
+          ...state,
+        }
+      }
+    }
+}
+
+export { partyReducer, electionReducer, voterReducer, connectionReducer, votingReducer };

@@ -22,7 +22,6 @@ export const get_voter_list = "user/list";
 export const get_voter_list_findid = "user/finduser/";
 export const delete_voter_list_findid = "user/delete/";
 export const post_use_login = "/login/user";
-// body:{'cardNo':"1232434", "password":"123"}
 
 //connection
 
@@ -31,3 +30,9 @@ export const get_connection_list = "partylist/list";
 export const get_connection_list_findid = "partylist/findId/";
 export const delete_connection_list_findid = "partlist/delete/";
 
+// vote
+export const post_voting_create = "vote/create";
+export const get_voting_list = "vote/list";
+
+//total vote
+export const get_vote_total = "total/count";

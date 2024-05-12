@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-// import bjp from '../../image/election-commission-of-india.jpg'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -7,8 +6,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { DELETE_Party_PENDING, GET_Party_PENDING, POST_Party_PENDING } from '../../use/action';
-import { base_url, get_party_list } from '../../AllURL';
+import { DELETE_Party_PENDING, GET_Party_PENDING, POST_Party_PENDING } from '../../../use/action';
+import { base_url, get_party_list } from '../../../AllURL';
 
 const Party = () => {
   const [open, setOpen] = useState(false);
@@ -54,12 +53,6 @@ const Party = () => {
     console.log(id, "delete id");
     dispatch({ type: DELETE_Party_PENDING, payload: id })
   }
-
-  useEffect(() => {
-    let url = base_url + get_party_list;
-    dispatch({ type: GET_Party_PENDING ,url });
-  }, []);
-  
 
 
   return (

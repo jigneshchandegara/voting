@@ -1,46 +1,94 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import './App.css';
-import Login from './componet/page/Login';
-// import Register from './componet/page/Register';
-import Dashboard from './componet/page/Dashboard';
-import Party from './componet/page/Party';
-import Election from './componet/page/Election';
-import Conection from './componet/page/Conection';
-import User from './componet/page/User';
-import Sidebar from './componet/sidebar/Sidebar';
+//admin
+import Sidebar from './componet/admin/sidebar/Sidebar';
+import User from './componet/admin/page/User';
+import Conection from './componet/admin/page/Conection';
+import Election from './componet/admin/page/Election';
+import Party from './componet/admin/page/Party';
+import Dashboard from './componet/admin/page/Dashboard';
+import AdminLogin from './componet/admin/page/AdminLogin';
+
+//user
+import Usersidebar from './componet/user/sidebar/Usersidebar';
+import Voter from './componet/user/page/Voter';
+import Profile from './componet/user/page/Profile';
+import Userlogin from './componet/user/page/Userlogin';
+import { useDispatch } from 'react-redux';
+import { GET_ELECTION_PENDING, GET_Party_PENDING, GET_VOTE_PENDING, GET_connection_PENDING } from './use/action';
+import { base_url, get_connection_list, get_election_list, get_party_list, get_voter_list } from './AllURL';
+import { useEffect } from 'react';
+
+
+const getRole = () => {
+    const role = localStorage.getItem("role");
+    return role;
+};
 
 
 function App() {
+    let dispatch = useDispatch();
 
+    useEffect(() => {
+        let party = base_url + get_party_list;
+        let election = base_url + get_election_list;
+        let connection = base_url + get_connection_list;
+        let vote = base_url + get_voter_list;
+        dispatch({ type: GET_Party_PENDING, payload: party });
+        dispatch({ type: GET_ELECTION_PENDING, payload: election })
+        dispatch({ type: GET_connection_PENDING, payload: connection })
+        dispatch({ type: GET_VOTE_PENDING, payload: vote })
+    }, [])
+
+    const role = getRole();
     const location = useLocation();
 
     const isLoginPage = location.pathname === "/";
 
+    if (!role || role === "") {
+        return (
+            <Routes>
+                <Route path="/" element={<Userlogin />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route path="/adminLogin" element={<AdminLogin />} />
+            </Routes>
+        );
+    }
+
+    if (role === "admin") {
+        return (
+            <>
+                <Sidebar />
+                <Routes>
+                    <Route path="*" element={<Dashboard to="/" replace />} />
+                    <Route path="/dashboard" exact element={<Dashboard />} />
+                    <Route path="/party" exact element={<Party />} />
+                    <Route path="/election" exact element={<Election />} />
+                    <Route path="/conection" exact element={<Conection />} />
+                    <Route path="/user" exact element={<User />} />
+                </Routes>
+            </>
+        );
+    }
+
+    if (role === "user") {
+        return (
+            <>
+
+                <Usersidebar />
+                <Routes>
+                    <Route path="/voter" element={<Voter />} />
+                    <Route path="/profile" element={<Profile />} />
+                </Routes>
+            </>
+        );
+    }
+
     return (
-        <>
-            {/* <Login /> */}
-            {/* <Register/> */}
-            {/* <Sidebar/> */}
-            {!isLoginPage && <Sidebar />}
-
-            {!isLoginPage &&
-                <Routes>
-                    <Route path="/" element={<Login />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/party" element={<Party />} />
-                    <Route path="/election" element={<Election />} />
-                    <Route path="/conection" element={<Conection />} />
-                    <Route path="/user" element={<User />} />
-                </Routes>
-            }
-
-            {isLoginPage && (
-                <Routes>
-                    <Route path="/" element={<Login />} />
-                </Routes>
-            )}
-        </>
-
+        <Routes>
+            <Route path="/" element={<Userlogin />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
     );
 }
 

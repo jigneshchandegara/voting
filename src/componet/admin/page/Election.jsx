@@ -6,8 +6,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { DELETE_ELECTION_PENDING, GET_ELECTION_PENDING, POST_ELECTION_PENDING } from '../../use/action';
-import { base_url, get_election_list } from '../../AllURL';
+import { DELETE_ELECTION_PENDING, GET_ELECTION_PENDING, POST_ELECTION_PENDING } from '../../../use/action';
+import { base_url, get_election_list } from '../../../AllURL';
 
 const Election = () => {
   const [open, setOpen] = React.useState(false);
@@ -57,10 +57,7 @@ const Election = () => {
   }
 
   // get data
-  useEffect(() => {
-    let url = base_url + get_election_list
-    dispatch({ type: GET_ELECTION_PENDING , url })
-  }, [])
+ 
 
   return (
     <div className="p-4 mt-16 sm:ml-64">

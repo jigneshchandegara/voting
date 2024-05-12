@@ -53,4 +53,13 @@ export const DELETE_connection_PENDING = "DELETE_connection_PENDING";
 export const DELETE_connection_SUCCESS = "DELETE_connection_SUCCESS";
 export const DELETE_connection_ERROR = "DELETE_connection_ERROR";
 
+//VOTING
+export const POST_VOTING_PENDING = "POST_VOTING_PENDING";
+export const POST_VOTING_SUCCESS = "POST_VOTING_SUCCESS";
+export const POST_VOTING_ERROR = "POST_VOTING_ERROR";
+
+
+export const GET_VOTING_PENDING = "GET_VOTING_PENDING";
+export const GET_VOTING_SUCCESS = "GET_VOTING_SUCCESS";
+export const GET_VOTING_ERROR = "GET_VOTING_ERROR";
 

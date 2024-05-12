@@ -1,9 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import logo from '../../image/election-commission-of-india.jpg';
+import logo from '../../../image/election-commission-of-india.jpg';
 
 
-const Sidebar = () => {
+const Usersidebar = () => {
+
+    const handlechange = () => {
+        window.location.reload();
+        localStorage.clear();
+        window.location.href = "/";
+    }
+
     return (
         <>
             <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -29,19 +36,13 @@ const Sidebar = () => {
                 <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
                     <ul class="space-y-2 font-medium">
                         <li>
-                            <Link to={'/dashboard'} class="text-center flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" >Dashboard</Link>
+                            <Link to={'/voter'} class="text-center flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" >voting</Link>
                         </li>
                         <li>
-                            <Link to={'/party'} class="text-center flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" >Party</Link>
+                            <Link to={'/profile'} class="text-center flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" >Profile</Link>
                         </li>
-                        <li >
-                            <Link to={'/election'} class="text-center flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">Election</Link>
-                        </li>
-                        <li >
-                            <Link to={'/conection'} class=" text-center flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" >Conection</Link>
-                        </li>
-                        <li >
-                            <Link to={'/user'} class=" text-center flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">User</Link>
+                        <li class=" text-center flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" onClick={handlechange}>
+                            Log out
                         </li>
                     </ul>
                 </div>
@@ -50,5 +51,5 @@ const Sidebar = () => {
     )
 }
 
-export default Sidebar
+export default Usersidebar
 
