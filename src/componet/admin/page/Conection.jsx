@@ -6,9 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { DELETE_connection_PENDING, GET_ELECTION_PENDING, GET_Party_PENDING, GET_connection_PENDING,  POST_connection_PENDING } from '../../../use/action';
-import { base_url, get_connection_list, get_election_list, get_party_list } from '../../../AllURL';
-
+import { POST_connection_PENDING } from '../../../use/action';
 
 const Conection = () => {
   const [open, setOpen] = React.useState(false);
@@ -26,10 +24,10 @@ const Conection = () => {
   };
 
   let election = useSelector((state) => state.electionReducer.election)
-  console.log(election, "election final data");
+  // console.log(election, "election final data");
 
   let party = useSelector((state) => state.partyReducer.party);
-  console.log(party, "party data");
+  // console.log(party, "party data");
 
 
   //poat data
@@ -39,13 +37,13 @@ const Conection = () => {
       election: electionname.current.value,
       party: partyname.current.value,
     }
-    console.log(connectdata, "connect data");
+    // console.log(connectdata, "connect data");
     dispatch({ type: POST_connection_PENDING, payload: connectdata })
   }
 
   //get data
   let connection = useSelector((state) => state.connectionReducer.connection);
-  console.log(connection, "connection final data");
+  // console.log(connection, "connection final data");
 
   
   return (
@@ -60,7 +58,6 @@ const Conection = () => {
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
                 <div className='grid gap-4 mb-4 grid-cols-2'>
-                  {/* <form class="max-w-sm mx-auto"> */}
                   <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selection Election Name</label>
                   <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ref={electionname}>
                     {
@@ -81,8 +78,6 @@ const Conection = () => {
                       })
                     }
                   </select>
-                  {/* </form> */}
-
                 </div>
               </DialogContentText>
             </DialogContent>

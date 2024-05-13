@@ -15,8 +15,8 @@ import Voter from './componet/user/page/Voter';
 import Profile from './componet/user/page/Profile';
 import Userlogin from './componet/user/page/Userlogin';
 import { useDispatch } from 'react-redux';
-import { GET_ELECTION_PENDING, GET_Party_PENDING, GET_VOTE_PENDING, GET_connection_PENDING } from './use/action';
-import { base_url, get_connection_list, get_election_list, get_party_list, get_voter_list } from './AllURL';
+import { GET_ELECTION_PENDING, GET_Party_PENDING, GET_VOTE_PENDING, GET_VOTING_PENDING, GET_connection_PENDING } from './use/action';
+import { base_url, get_connection_list, get_election_list, get_party_list, get_voter_list, get_voting_list } from './AllURL';
 import { useEffect } from 'react';
 
 
@@ -34,10 +34,12 @@ function App() {
         let election = base_url + get_election_list;
         let connection = base_url + get_connection_list;
         let vote = base_url + get_voter_list;
+        let voting = base_url + get_voting_list;
         dispatch({ type: GET_Party_PENDING, payload: party });
-        dispatch({ type: GET_ELECTION_PENDING, payload: election })
-        dispatch({ type: GET_connection_PENDING, payload: connection })
-        dispatch({ type: GET_VOTE_PENDING, payload: vote })
+        dispatch({ type: GET_ELECTION_PENDING, payload: election });
+        dispatch({ type: GET_connection_PENDING, payload: connection });
+        dispatch({ type: GET_VOTE_PENDING, payload: vote });
+        dispatch({ type: GET_VOTING_PENDING, payload: voting })
     }, [])
 
     const role = getRole();

@@ -14,7 +14,7 @@ const AdminLogin = () => {
             name: name.current.value,
             password: password.current.value,
         }
-        console.log(logindata);
+        // console.log(logindata);
         if (logindata?.name !== "" || logindata?.password !== "") {
             let result = await axios.post(base_url + post_adminlogin, logindata).catch((e) => console.log(e));
             if (result?.status == 200) {

@@ -8,6 +8,7 @@ import {
   get_election_list,
   get_party_list,
   get_voter_list,
+  get_voting_list,
   post_connection_create,
   post_election_create,
   post_party_create,
@@ -151,14 +152,24 @@ let get_connection = (action) => {
 
 //voting
 let post_voting = (action) => {
-  console.log(action, "this action from post voting");
+  // console.log(action, "this action from post voting");
   return axios.post(base_url + post_voting_create, action.payload).then((res) => {
-    console.log(res, "res is post voting");
+    // console.log(res, "res is post voting");
     let data = res.data.data;
     let status = res.status;
-    return {data, status}; 
-  });
-};
+    return { data, status }
+  })
+}
+
+let get_voting = (action) => {
+  // console.log(action, "this action from get voting");
+  return axios.get(base_url + get_voting_list).then((res) => {
+    // console.log(res, "res is get voting");
+    let data = res.data.data;
+    let status = res.status;
+    return { data, status }
+  })
+}
 
 
 export {
@@ -173,5 +184,6 @@ export {
   delete_voter,
   post_connection,
   get_connection,
-  post_voting
+  post_voting,
+  get_voting,
 };

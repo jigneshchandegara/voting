@@ -6,8 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { DELETE_VOTE_PENDING, GET_VOTE_PENDING, POST_VOTE_PENDING } from '../../../use/action';
-import { base_url, get_voter_list } from '../../../AllURL';
+import { DELETE_VOTE_PENDING, POST_VOTE_PENDING } from '../../../use/action';
 
 const User = () => {
 
@@ -63,17 +62,17 @@ const User = () => {
       address: address,
       password: password
     }
-    console.log(voterlist, "voterlist")
+    // console.log(voterlist, "voterlist")
 
     dispatch({ type: POST_VOTE_PENDING, payload: voterlist });
   }
 
   let voter = useSelector((state) => state.voterReducer.voter)
-  console.log(voter, "final voter data");
+  // console.log(voter, "final voter data");
 
   //delete data
   const voterdelete = (id) => {
-    console.log(id, "voter id");
+    // console.log(id, "voter id");
     dispatch({ type: DELETE_VOTE_PENDING, payload: id });
   }
 
@@ -106,8 +105,8 @@ const User = () => {
                     <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ref={fathernameRef} placeholder="Enter Father Name" required />
                   </div>
                   <div className='col-span-2 mb-2'>
-                    <label class="block  text-sm font-medium text-gray-900 dark:text-white">Sex</label>
-                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ref={sexRef} placeholder="Enter Sex" required />
+                    <label class="block  text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ref={sexRef} placeholder="Enter Gender" required />
                   </div>
                   <div className='col-span-2 mb-2'>
                     <label class="block  text-sm font-medium text-gray-900 dark:text-white">Birth Data</label>
@@ -157,7 +156,7 @@ const User = () => {
                   Father Name
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Sex
+                  Gender
                 </th>
                 <th scope="col" class="px-6 py-3">
                   Birth Data

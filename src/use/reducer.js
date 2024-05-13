@@ -20,6 +20,9 @@ import {
   GET_VOTE_ERROR,
   GET_VOTE_PENDING,
   GET_VOTE_SUCCESS,
+  GET_VOTING_ERROR,
+  GET_VOTING_PENDING,
+  GET_VOTING_SUCCESS,
   GET_connection_ERROR,
   GET_connection_PENDING,
   GET_connection_SUCCESS,
@@ -51,13 +54,13 @@ let initialstate = {
 };
 
 let partyReducer = (state = initialstate, action) => {
-  // console.log(action, "action from partyreducer");
+  console.log(action, "action from partyreducer");
   switch (action.type) {
     //post
     case POST_Party_PENDING: {
       return {
-        isLoading: true,
         ...state,
+        isLoading: true,
       };
     }
     case POST_Party_SUCCESS: {
@@ -69,8 +72,8 @@ let partyReducer = (state = initialstate, action) => {
     }
     case POST_Party_ERROR: {
       return {
-        isError: action.data,
         ...state,
+        isError: action.data,
       };
     }
     //get all data
@@ -122,19 +125,19 @@ let partyReducer = (state = initialstate, action) => {
 };
 
 let electionReducer = (state = initialstate, action) => {
-  // console.log(action, "action from electionreducer");
+  console.log(action, "action from electionreducer");
   switch (action.type) {
     //post
     case POST_ELECTION_PENDING: {
       return {
-        isLoading: true,
         ...state,
+        isLoading: true,
       };
     }
     case POST_ELECTION_ERROR: {
       return {
-        isError: action.data,
         ...state,
+        isError: action.data,
       };
     }
     case POST_ELECTION_SUCCESS: {
@@ -147,8 +150,8 @@ let electionReducer = (state = initialstate, action) => {
     //get
     case GET_ELECTION_PENDING: {
       return {
-        isLoading: true,
         ...state,
+        isLoading: true,
       };
     }
     case GET_ELECTION_SUCCESS: {
@@ -160,15 +163,15 @@ let electionReducer = (state = initialstate, action) => {
     }
     case GET_ELECTION_ERROR: {
       return {
-        isError: action.data,
         ...state,
+        isError: action.data,
       };
     }
     //delete
     case DELETE_ELECTION_PENDING: {
       return {
-        isLoading: true,
         ...state,
+        isLoading: true,
       };
     }
     case DELETE_ELECTION_SUCCESS: {
@@ -193,13 +196,13 @@ let electionReducer = (state = initialstate, action) => {
 };
 
 let voterReducer = (state = initialstate, action) => {
-  // console.log(action, "action from voterreducer");
+  console.log(action, "action from voterreducer");
   switch (action.type) {
     //post
     case POST_VOTE_PENDING: {
       return {
-        isLoading: true,
         ...state,
+        isLoading: true,
       };
     }
     case POST_VOTE_SUCCESS: {
@@ -211,15 +214,15 @@ let voterReducer = (state = initialstate, action) => {
     }
     case POST_VOTE_ERROR: {
       return {
-        isError: action.data,
         ...state,
+        isError: action.data,
       };
     }
     //get
     case GET_VOTE_PENDING: {
       return {
-        isLoading: true,
         ...state,
+        isLoading: true,
       };
     }
     case GET_VOTE_SUCCESS: {
@@ -231,15 +234,15 @@ let voterReducer = (state = initialstate, action) => {
     }
     case GET_VOTE_ERROR: {
       return {
-        isError: action.data,
         ...state,
+        isError: action.data,
       };
     }
     //delete
     case DELETE_VOTE_PENDING: {
       return {
-        isLoading: true,
         ...state,
+        isLoading: true,
       };
     }
     case DELETE_VOTE_SUCCESS: {
@@ -264,13 +267,13 @@ let voterReducer = (state = initialstate, action) => {
 };
 
 let connectionReducer = (state = initialstate, action) => {
-  // console.log(action, "action from connectionReducer");
+  console.log(action, "action from connectionReducer");
   switch (action.type) {
     //post
     case POST_connection_PENDING: {
       return {
-        isLoading: true,
         ...state,
+        isLoading: true,
       };
     }
     case POST_connection_SUCCESS: {
@@ -282,15 +285,15 @@ let connectionReducer = (state = initialstate, action) => {
     }
     case POST_connection_ERROR: {
       return {
-        isError: action.data,
         ...state,
+        isError: action.data,
       };
     }
     //get
     case GET_connection_PENDING: {
       return {
-        isLoading: true,
         ...state,
+        isLoading: true,
       };
     }
     case GET_connection_SUCCESS: {
@@ -302,8 +305,8 @@ let connectionReducer = (state = initialstate, action) => {
     }
     case GET_connection_ERROR: {
       return {
-        isError: action.data,
         ...state,
+        isError: action.data,
       };
     }
     default: {
@@ -335,6 +338,25 @@ let votingReducer = (state = initialstate, action) => {
           isError: action.data,
           ...state,
         };
+      }
+      case GET_VOTING_PENDING :{
+        return{
+          ...state,
+          isLoading :true,
+        }
+      }
+      case GET_VOTING_SUCCESS :{
+        return{
+          ...state,
+          isLoading : false,
+          voting:action.data
+        }
+      }
+      case GET_VOTING_ERROR :{
+        return{
+          ...state,
+          isError:action.data
+        }
       }
       default :{
         return{

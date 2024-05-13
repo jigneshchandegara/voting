@@ -6,8 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { DELETE_Party_PENDING, GET_Party_PENDING, POST_Party_PENDING } from '../../../use/action';
-import { base_url, get_party_list } from '../../../AllURL';
+import { DELETE_Party_PENDING,  POST_Party_PENDING } from '../../../use/action';
 
 const Party = () => {
   const [open, setOpen] = useState(false);
@@ -39,18 +38,18 @@ const Party = () => {
     formdata.append("party_name", party_name);
     formdata.append("party_logo", file);
     formdata.append("short_code", short_code);
-    console.log(party_name);
-    console.log(file);
-    console.log(short_code);
-    console.log(formdata);
+    // console.log(party_name);
+    // console.log(file);
+    // console.log(short_code);
+    // console.log(formdata);
     dispatch({ type: POST_Party_PENDING, payload: formdata });
   }
 
   let party = useSelector((state) => state.partyReducer.party);
-  console.log(party, "party data");
+  // console.log(party, "party data");
 
   const handledelete = (id) => {
-    console.log(id, "delete id");
+    // console.log(id, "delete id");
     dispatch({ type: DELETE_Party_PENDING, payload: id })
   }
 

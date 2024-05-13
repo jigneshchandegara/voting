@@ -27,15 +27,18 @@ const Voter = () => {
     e.preventDefault();
     let finaldata = {
       user: user?._id,
-      party: voterData?._id,
-      election: voterData?.election,
+      party: voterData?.party?._id,
+      election: voterData?.election?._id,
     };
-    console.log(finaldata, "voting");
+    // console.log(finaldata, "voting");
     dispatch({ type: POST_VOTING_PENDING, payload: finaldata });
 
     setvoterid(null);
     setvoterData(null);
   };
+
+  let votingdata = useSelector((state) => state.votingReducer.voting);
+  console.log(votingdata , "votingdata");
   return (
     <div class="p-4 mt-16 sm:ml-64">
       <button class="p-2 m-2 bg-blue-500 " onClick={handleSubmit}> Submit</button>

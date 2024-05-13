@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, {  useRef, useState } from 'react'
 import logo from '../../../image/election-commission-of-india.jpg';
-import { base_url, get_voter_list, post_use_login } from '../../../AllURL';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { GET_VOTE_PENDING } from '../../../use/action';
+import {  useSelector } from 'react-redux';
+
 
 
 const Userlogin = () => {
@@ -12,15 +11,9 @@ const Userlogin = () => {
     let password = useRef();
 
     const [loading, setLoading] = useState(false);
-    let dispatch = useDispatch();
-
-    useEffect(() => {
-        const voterdata = base_url + get_voter_list;
-        dispatch({ type: GET_VOTE_PENDING , payload : voterdata})
-    },[])
 
     let voter = useSelector((state) => state.voterReducer.voter)
-    console.log(voter , "voter login data");
+    // console.log(voter , "voter login data");
 
     const userlogin = async () => {
 
@@ -29,7 +22,7 @@ const Userlogin = () => {
             cardNo: cardno.current.value,
             password: password.current.value
         };
-        console.log(userlogin , "login");
+        console.log(userlogin, "login");
         if (cardno.current.value === "" || password.current.value === "") {
             setLoading(false);
             alert("Please complete all fields");
@@ -38,9 +31,9 @@ const Userlogin = () => {
                 let res = await axios.post(
                     "http://13.127.211.205:8000/v1/login/user",
                     userlogin
-                  );
+                );
                 if (res.status === 200) {
-                    // if (!voter.find((value) => value.user?.cardNo === userlogin.cardNo)) {
+                    if (!voter.find((value) => value.user?.cardNo === userlogin.cardNo)) {
                         localStorage.setItem("role", "user");
                         localStorage.setItem("userData", JSON.stringify(res.data.data));
                         alert("Login Successfully")
@@ -49,12 +42,12 @@ const Userlogin = () => {
                         }, 600);
                         cardno.current.value = "";
                         password.current.value = "";
-                    // } else {
-                    //     setLoading(false);
-                    //     alert("You have already voted")
-                    //     cardno.current.value = "";
-                    //     password.current.value = "";
-                    // }
+                    } else {
+                        setLoading(false);
+                        alert("You have already voted")
+                        cardno.current.value = "";
+                        password.current.value = "";
+                    }
                 } else {
                     setLoading(false);
                     alert("Please check VoterID and password");
