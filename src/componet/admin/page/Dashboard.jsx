@@ -28,7 +28,7 @@ const Dashboard = () => {
 
     const partyVotes = calculatePartyVotes(votingdata)
 
-    let count = partyVotes[party.party_name] || 0 ;
+    
 
     return (
         <>
@@ -89,7 +89,7 @@ const Dashboard = () => {
                                                     {value.short_code}
                                                 </td>
                                                 <td class="px-6 py-4 text-gray-600 ">
-                                                    {count}
+                                                    {partyVotes[value.party_name] || 0}
                                                 </td>
                                             </tr>
                                         )
